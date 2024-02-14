@@ -8,14 +8,12 @@ eureka:
 spring:
   application:
     name: api-gateway
+  config:
+    import: "configserver:http://localhost:8888"
   cloud:
-    config:
-      uri: http://localhost:8888
-      name: api-gateway
-      enabled: false
     gateway:
       routes:
-        - id: EMPLOYEE-SERVICE
-          uri: lb://EMPLOYEE-SERVICE
+        - id: PRODUCT-SERVICE
+          uri: lb://PRODUCT-SERVICE
           predicates:
-            - Path=/employee/**
+            - Path=/product/**
