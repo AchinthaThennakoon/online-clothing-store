@@ -23,10 +23,11 @@ public class Product {
     private String name;
     private String category;
     private Double price;
-    private Long quantity;
     private Date createTime;
 
     @ManyToMany(mappedBy = "products")
     private Set<Supplier> suppliers = new HashSet<>();
+
+
 
 }
