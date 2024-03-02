@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -17,8 +18,11 @@ public class ProductDTO {
     private Double price;
     private Long quantity;
     private Date createTime;
+    private List<InventoryDTO> inventoryDTOList;
 
     //search options
     private Double minPrice;
     private Double maxPrice;
+    private String color;
+
 }

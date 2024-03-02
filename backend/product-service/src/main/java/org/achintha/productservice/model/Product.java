@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,6 +29,6 @@ public class Product {
     @ManyToMany(mappedBy = "products")
     private Set<Supplier> suppliers = new HashSet<>();
 
-
-
+    @OneToMany(mappedBy = "product")
+    private List<Inventory> inventories;
 }
