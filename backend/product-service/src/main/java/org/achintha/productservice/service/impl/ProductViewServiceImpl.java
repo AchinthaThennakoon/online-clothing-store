@@ -1,5 +1,6 @@
 package org.achintha.productservice.service.impl;
 
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import org.achintha.productservice.dto.InventoryDTO;
 import org.achintha.productservice.dto.ProductDTO;
@@ -103,9 +104,7 @@ public class ProductViewServiceImpl implements ProductViewService {
             }
 
             //todo: add filters for color,size,in stock
-            if(productDTO.getColor()!=null && productDTO.getColor().isEmpty() ){
-                predicates.add(criteriaBuilder.equal(root.get("inventories.color.colorName"),productDTO.getColor()));
-            }
+
 
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
