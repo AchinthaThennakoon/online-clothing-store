@@ -20,7 +20,7 @@ public class ProductViewController {
     }
 
 
-    @PostMapping("view")
+    @PostMapping("getAllProducts")
     public ResponseEntity<Object> view(@RequestBody(required = false) Object requestBody,
                                        @RequestParam(defaultValue = "0") int page,
                                        @RequestParam(defaultValue = "10") int size,
@@ -30,4 +30,16 @@ public class ProductViewController {
         List<ProductDTO> productDTOS = productViewService.getProducts(requestBody,page,size,sort,search);
         return new ResponseEntity<>(productDTOS, HttpStatus.OK);
     }
+//
+//    @PostMapping("getProducts/{category1}")
+//    public ResponseEntity<Object> view(@RequestBody(required = false) Object requestBody,
+//                                       @RequestParam(defaultValue = "0") int page,
+//                                       @RequestParam(defaultValue = "10") int size,
+//                                       @RequestParam(defaultValue = "createTime,desc") String[] sort,
+//                                       @RequestParam(defaultValue = "false") boolean search,
+//                                       @PathVariable String category1){
+//
+//        List<ProductDTO> productDTOS = productViewService.getProducts(requestBody,page,size,sort,search,category1);
+//        return new ResponseEntity<>(productDTOS, HttpStatus.OK);
+//    }
 }

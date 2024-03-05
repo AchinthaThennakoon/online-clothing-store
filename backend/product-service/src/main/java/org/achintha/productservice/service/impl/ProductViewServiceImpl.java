@@ -1,6 +1,5 @@
 package org.achintha.productservice.service.impl;
 
-import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import org.achintha.productservice.dto.InventoryDTO;
 import org.achintha.productservice.dto.ProductDTO;
@@ -41,7 +40,7 @@ public class ProductViewServiceImpl implements ProductViewService {
 
         Page<Product> products;
         Specification<Product> specification = null;
-        List<ProductDTO> productDTOList = new ArrayList<>();
+        List<ProductDTO> productDTOList = null;
 
         //map request body to DTO
         if (search && requestBody!= null){
@@ -60,6 +59,15 @@ public class ProductViewServiceImpl implements ProductViewService {
         //final result
         products = productRepository.findAll(specification,pageable);
 
+        if (!products.isEmpty()) {
+            productDTOList = mapProductResultToDTO(products);
+        }
+
+        return productDTOList;
+    }
+
+    private List<ProductDTO> mapProductResultToDTO(Page<Product> products) {
+        List<ProductDTO> productDTOList = new ArrayList<>();
         products.forEach(product -> {
             ProductDTO productDTO = new ProductDTO();
 
@@ -67,6 +75,7 @@ public class ProductViewServiceImpl implements ProductViewService {
             productDTO.setId(product.getId());
             productDTO.setName(product.getName());
             productDTO.setPrice(product.getPrice());
+            productDTO.setCategory1(product.getCategory1());
 
             productDTO.setInventoryDTOList(mapProductToInventory(product.getInventories()));
 
@@ -101,6 +110,18 @@ public class ProductViewServiceImpl implements ProductViewService {
             }
             if (productDTO.getMaxPrice()!=null){
                 predicates.add(criteriaBuilder.lessThan(root.get("price"),productDTO.getMaxPrice()));
+            }
+
+            if (productDTO.getCategory1()!=null && !productDTO.getCategory1().isEmpty()){
+                predicates.add(criteriaBuilder.equal(root.get("category1"),productDTO.getCategory1()));
+            }
+
+            if (productDTO.getCategory2()!=null && !productDTO.getCategory2().isEmpty()){
+                predicates.add(criteriaBuilder.equal(root.get("category2"),productDTO.getCategory2()));
+            }
+
+            if (productDTO.getCategory3()!=null && !productDTO.getCategory3().isEmpty()){
+                predicates.add(criteriaBuilder.equal(root.get("category3"),productDTO.getCategory3()));
             }
 
             //todo: add filters for color,size,in stock

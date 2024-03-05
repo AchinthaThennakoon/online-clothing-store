@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ProductViewService {
     List<ProductDTO> getProducts(Object requestBody, int page, int size, String[] sort, boolean search);
+
+//    List<ProductDTO> getProducts(Object requestBody, int page, int size, String[] sort, boolean search, String category1);
 }
