@@ -2,6 +2,7 @@ package org.achintha.productservice.service.impl;
 
 import jakarta.persistence.criteria.Predicate;
 import org.achintha.productservice.dto.InventoryDTO;
+import org.achintha.productservice.dto.PaginatedResponse;
 import org.achintha.productservice.dto.ProductDTO;
 import org.achintha.productservice.model.Inventory;
 import org.achintha.productservice.model.Product;
@@ -36,11 +37,14 @@ public class ProductViewServiceImpl implements ProductViewService {
 
 
     @Override
-    public List<ProductDTO> getProducts(Object requestBody, int page, int size, String[] sort, boolean search) {
+    public PaginatedResponse<ProductDTO> getProducts(Object requestBody, int page, int size, String[] sort, boolean search) {
 
         Page<Product> products;
         Specification<Product> specification = null;
         List<ProductDTO> productDTOList = null;
+
+        PaginatedResponse<ProductDTO> response = new PaginatedResponse<>();
+        response.setCurrentPage(page);
 
         //map request body to DTO
         if (search && requestBody!= null){
@@ -61,9 +65,12 @@ public class ProductViewServiceImpl implements ProductViewService {
 
         if (!products.isEmpty()) {
             productDTOList = mapProductResultToDTO(products);
+            response.setData(productDTOList);
+            response.setTotalPages(products.getTotalPages());
+            response.setTotalElements(products.getTotalElements());
         }
 
-        return productDTOList;
+        return response;
     }
 
     private List<ProductDTO> mapProductResultToDTO(Page<Product> products) {

@@ -1,5 +1,6 @@
 package org.achintha.productservice.controller;
 
+import org.achintha.productservice.dto.PaginatedResponse;
 import org.achintha.productservice.dto.ProductDTO;
 import org.achintha.productservice.service.ProductViewService;
 import org.springframework.http.HttpStatus;
@@ -21,13 +22,13 @@ public class ProductViewController {
 
 
     @PostMapping("getAllProducts")
-    public ResponseEntity<Object> view(@RequestBody(required = false) Object requestBody,
-                                       @RequestParam(defaultValue = "0") int page,
-                                       @RequestParam(defaultValue = "10") int size,
-                                       @RequestParam(defaultValue = "createTime,desc") String[] sort,
-                                       @RequestParam(defaultValue = "false") boolean search){
+    public ResponseEntity<PaginatedResponse<ProductDTO>> view(@RequestBody(required = false) Object requestBody,
+                                                  @RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "10") int size,
+                                                  @RequestParam(defaultValue = "createTime,desc") String[] sort,
+                                                  @RequestParam(defaultValue = "false") boolean search){
 
-        List<ProductDTO> productDTOS = productViewService.getProducts(requestBody,page,size,sort,search);
+        PaginatedResponse<ProductDTO> productDTOS = productViewService.getProducts(requestBody,page,size,sort,search);
         return new ResponseEntity<>(productDTOS, HttpStatus.OK);
     }
 }
