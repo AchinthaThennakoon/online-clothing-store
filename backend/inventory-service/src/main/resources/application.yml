@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: INVENTORY-SERVICE
+  config:
+    import: "configserver:http://localhost:8888"
+  jpa:
+    show-sql: true
+
+server:
+  port: 0
+
