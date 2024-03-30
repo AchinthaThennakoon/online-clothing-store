@@ -9,6 +9,7 @@ May include features like product search, filtering, and categorization.
 Manages the inventory of clothing items.
 Handles stock levels, restocking, and inventory tracking.
 May integrate with the Product Service to update stock information.
+add item/ update existing one / update out of stock / delete 
 
 3.Order Service:
 
@@ -21,6 +22,7 @@ Manages order status and history.
 Manages customer shopping carts.
 Handles adding/removing items to/from the cart.
 May include features like cart persistence, expiration, and merging.
+
 User Service:
 
 Manages user information and authentication.
