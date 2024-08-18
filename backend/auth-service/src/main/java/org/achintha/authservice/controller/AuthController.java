@@ -4,6 +4,8 @@ import org.achintha.authservice.dto.AuthRequest;
 import org.achintha.authservice.entity.UserCredential;
 import org.achintha.authservice.service.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,7 +27,13 @@ public class AuthController {
 
     @PostMapping("/token")
     public String getToken(@RequestBody AuthRequest authRequest){
-        return authService.generateToken(authRequest.getUsername());
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(),authRequest.getPassword()));
+        if (authentication.isAuthenticated()){
+            return authService.generateToken(authRequest.getUsername());
+        }else {
+            throw new RuntimeException("Invalid access");
+        }
+
     }
 
     @GetMapping("/validate")
