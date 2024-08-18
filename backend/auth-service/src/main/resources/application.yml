@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: AUTH-SERVICE
+  config:
+    import: "configserver:http://localhost:8888"
+  jpa:
+    show-sql: true
+server:
+  port: 9898
+
